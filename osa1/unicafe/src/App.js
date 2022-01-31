@@ -9,21 +9,38 @@ const Header = (props) => {
 }
 
 const Statistics = (props) => {
-  console.log('props: ', props.state)
-  if (props.state < 1) {
+  if (props.parts[3].value < 1) {
     return (
       <div>
         <p> No feedback given </p>
       </div>
-      )
+    )
   }
   return (
     <div>
-      <p> {props.category} {props.state} </p>
+      <StatisticLine part={props.parts[0]} />
+      <StatisticLine part={props.parts[1]} />
+      <StatisticLine part={props.parts[2]} />
+      <StatisticLine part={props.parts[3]} />
+      <StatisticLine part={props.parts[4]} />
+      <StatisticLine part={props.parts[5]} />
     </div>
   )
 }
 
+const StatisticLine = (props) => {
+  return (
+    <div>
+      <p> {props.part.text}  {props.part.value} </p>
+    </div>
+  )
+}
+
+const Button = ({ handleClick, text }) => (
+  <button onClick={handleClick}>
+    {text}
+  </button>
+)
 
 const App = () => {
   const [clicks, setClicks] = useState({
@@ -45,6 +62,35 @@ const App = () => {
   const [sum, setSum] = useState(0)
   const [average, setAverage] = useState(0)
   const [positives, setPositives] = useState(0)
+
+  const stats = {
+    parts: [
+      {
+        text: textGood,
+        value: good
+      },
+      {
+        text: textNeutral,
+        value: neutral
+      },
+      {
+        text: textBad,
+        value: bad
+      },
+      {
+        text: textAll,
+        value: sum
+      },
+      {
+        text: textAv,
+        value: average
+      },
+      {
+        text: textPos,
+        value: positives
+      }
+    ]
+  }
 
   const handGoodClick = () => {
     setGood(good + 1)
@@ -69,16 +115,11 @@ const App = () => {
   return (
     <div >
       <Header title={header1} />
-      <button onClick={handGoodClick}>good</button>
-      <button onClick={handleNeutralClick}>neutral</button>
-      <button onClick={handleBadClick}>bad</button>
+      <Button handleClick={handGoodClick} text={textGood} />
+      <Button handleClick={handleNeutralClick} text={textNeutral} />
+      <Button handleClick={handleBadClick} text={textBad} />
       <Header title={headerStat} />
-      <Statistics category={textGood} state={good} />
-      <Statistics category={textNeutral} state={neutral} />
-      <Statistics category={textBad} state={bad} />
-      <Statistics category={textAll} state={sum} />
-      <Statistics category={textAv} state={average} />
-      <Statistics category={textPos} state={positives} />
+      <Statistics parts={stats.parts} />
     </div>
   )
 }
