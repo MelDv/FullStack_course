@@ -8,7 +8,7 @@ const Header = (props) => {
   )
 }
 
-const StatText = (props) => {
+const Statistics = (props) => {
   return (
     <div>
       <p> {props.category} {props.state} </p>
@@ -65,12 +65,12 @@ const App = () => {
       <button onClick={handleNeutralClick}>neutral</button>
       <button onClick={handleBadClick}>bad</button>
       <Header title={headerStat} />
-      <StatText category={textGood} state={good} />
-      <StatText category={textNeutral} state={neutral} />
-      <StatText category={textBad} state={bad} />
-      <StatText category={textAll} state={sum} />
-      <StatText category={textAv} state={average} />
-      <StatText category={textPos} state={positives} />
+      <Statistics category={textGood} state={good} />
+      <Statistics category={textNeutral} state={neutral} />
+      <Statistics category={textBad} state={bad} />
+      <Statistics category={textAll} state={sum} />
+      <Statistics category={textAv} state={average} />
+      <Statistics category={textPos} state={positives} />
     </div>
   )
 }
