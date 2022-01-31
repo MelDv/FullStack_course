@@ -17,22 +17,26 @@ const Statistics = (props) => {
     )
   }
   return (
-    <div>
-      <StatisticLine part={props.parts[0]} />
-      <StatisticLine part={props.parts[1]} />
-      <StatisticLine part={props.parts[2]} />
-      <StatisticLine part={props.parts[3]} />
-      <StatisticLine part={props.parts[4]} />
-      <StatisticLine part={props.parts[5]} />
-    </div>
+    <>
+      <table>
+        <tbody>
+          <StatisticLine part={props.parts[0]} />
+          <StatisticLine part={props.parts[1]} />
+          <StatisticLine part={props.parts[2]} />
+          <StatisticLine part={props.parts[3]} />
+          <StatisticLine part={props.parts[4]} />
+          <StatisticLine part={props.parts[5]} />
+        </tbody>
+      </table>
+    </>
   )
 }
 
 const StatisticLine = (props) => {
   return (
-    <div>
-      <p> {props.part.text}  {props.part.value} </p>
-    </div>
+    <>
+      <tr><td>{props.part.text}</td><td>{props.part.value}</td></tr>
+    </>
   )
 }
 
