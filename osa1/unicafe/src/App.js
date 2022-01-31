@@ -9,6 +9,14 @@ const Header = (props) => {
 }
 
 const Statistics = (props) => {
+  console.log('props: ', props.state)
+  if (props.state < 1) {
+    return (
+      <div>
+        <p> No feedback given </p>
+      </div>
+      )
+  }
   return (
     <div>
       <p> {props.category} {props.state} </p>
