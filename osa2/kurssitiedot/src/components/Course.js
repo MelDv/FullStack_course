@@ -1,11 +1,14 @@
-const Course = ({ course }) => {
+const Course = (props) => {
+    const { courses } = props
     return (
         <div>
-            <h1> Courses </h1>
+            <h1> Web development curriculum </h1>
             <ul>
-                <Header key={course.id} name={course.name} />
-                <Content parts={course.parts} />
-                <Total parts={course.parts} />
+                {courses.map(course =>
+                    <><Header key={course.id} name={course.name} />
+                        <Content parts={course.parts} />
+                        <Total parts={course.parts} /></>
+                )}
             </ul>
         </div>
     )
@@ -14,7 +17,7 @@ const Course = ({ course }) => {
 const Header = (course) => {
     return (
         <div>
-            <h2> {course.name} </h2>
+            <li><h2> {course.name} </h2></li>
         </div>
     )
 }
