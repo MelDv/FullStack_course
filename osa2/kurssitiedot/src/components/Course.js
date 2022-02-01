@@ -1,5 +1,4 @@
 const Course = ({ course }) => {
-    console.log(course);
     return (
         <div>
             <h1> Courses </h1>
@@ -21,7 +20,6 @@ const Header = (course) => {
 }
 
 const Content = ({ parts }) => {
-    console.log(parts);
     return (
         <div>
             <ul>
@@ -34,7 +32,6 @@ const Content = ({ parts }) => {
 }
 
 const Part = (part) => {
-    console.log(part);
     return (
         <div>
             <li> {part.name} {part.exercises} </li>
@@ -47,7 +44,7 @@ const Total = (course) => {
         a + b.exercises, 0);
     return (
         <div>
-            <br/><b> Number of exercises {sum} </b>
+            <br /><b> Number of exercises {sum} </b>
         </div>
     )
 }
