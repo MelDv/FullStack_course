@@ -12,15 +12,12 @@ const App = () => {
   const [newFilter, setFilter] = useState('')
 
   useEffect(() => {
-    console.log('effect')
     personService
       .getAll()
       .then(initialPersons => {
         setPersons(initialPersons)
       })
   }, [])
-
-  console.log('render', persons.length, 'persons')
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -47,6 +44,18 @@ const App = () => {
     }
     setNewName('')
     setNewNumber('')
+  }
+
+  const deletePerson = id => {
+    const url = `http://localhost:3001/persons/${id}`
+    const person = persons.find(person => person.id === id)
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personService
+        .deletePersonById(id)
+        .then(returnedPersons => {
+          setPersons(persons.filter(person => person.id !== id))
+        })
+    }
   }
 
   const doFiltering = (event) => {
@@ -96,7 +105,8 @@ const App = () => {
       <h2>Numbers</h2>
       <ul>
         {persons.map(person =>
-          <Person key={person.name} person={person} />)}
+          <Person key={person.name} person={person}
+            deletePerson={() => deletePerson(person.id)} />)}
       </ul>
     </div>
   )
