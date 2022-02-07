@@ -30,7 +30,17 @@ const App = () => {
     }
     let exists = false
     persons.map(person => {
-      if (person.name === newName) {
+      if (person.name === newName && person.number !== newNumber && newNumber !== '') {
+        exists = true
+        if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+          const changedPerson = { ...person, number: newNumber }
+          personService
+            .update(person.id, changedPerson)
+            .then(returnedPerson => {
+              setPersons(persons.map(person => person.id !== changedPerson.id ? person : returnedPerson))
+            })
+        }
+      } else if (person.name === newName) {
         exists = true
         window.alert(`${newName} is already added to phonebook`)
       }
@@ -41,11 +51,10 @@ const App = () => {
         .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
         })
+      setNewName('')
+      setNewNumber('')
     }
-    setNewName('')
-    setNewNumber('')
   }
-
   const deletePerson = id => {
     const url = `http://localhost:3001/persons/${id}`
     const person = persons.find(person => person.id === id)
