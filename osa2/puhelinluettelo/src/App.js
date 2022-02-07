@@ -3,6 +3,7 @@ import Person from './components/Person'
 import Filter from './components/Filter'
 import NewPerson from './components/NewPerson'
 import Footer from './components/Footer'
+import Notification from './components/Notification'
 import personService from './services/persons'
 
 const App = () => {
@@ -11,7 +12,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setFilter] = useState('')
   const [message, setMessage] = useState(null)
-  const isError = { error: false } //muunnos ei toimi: arvo ei muutu Notification-komponentissa
+  const [isError, setError] = useState(true)
 
   useEffect(() => {
     personService
@@ -41,8 +42,16 @@ const App = () => {
             .then(returnedPerson => {
               setPersons(persons.map(person => person.id !== changedPerson.id ? person : returnedPerson))
             })
-          isError.error = false
-          console.log('isError in change number: ', isError)
+            .catch(error => {
+              setError(true)
+              setMessage(
+                `Information of ${person.name} has already been removed from server.`
+              )
+              setTimeout(() => {
+                setMessage(null)
+              }, 5000)
+            })
+          setError(false)
           setMessage(
             `Changed phone number for ${person.name}`
           )
@@ -52,8 +61,7 @@ const App = () => {
         }
       } else if (person.name === newName) {
         exists = true
-        isError.error = true
-        console.log('isError in already added: ', isError)
+        setError(true)
         setNewName('')
         setNewNumber('')
         setMessage(
@@ -72,8 +80,7 @@ const App = () => {
         })
       setNewName('')
       setNewNumber('')
-      isError.error = false
-      console.log('isError in exists: ', isError)
+      setError(false)
       setMessage(
         `Added ${personObject.name}`
       )
@@ -84,6 +91,7 @@ const App = () => {
     setNewName('')
     setNewNumber('')
   }
+
   const deletePerson = id => {
     const url = `http://localhost:3001/persons/${id}`
     const person = persons.find(person => person.id === id)
@@ -93,8 +101,7 @@ const App = () => {
         .then(returnedPersons => {
           setPersons(persons.filter(person => person.id !== id))
         })
-      isError.error = false
-      console.log('isError in delete: ', isError)
+      setError(false)
       setMessage(
         `Deleted ${person.name}`
       )
@@ -128,27 +135,6 @@ const App = () => {
     setPersons(filtered)
   }
 
-  const Notification = (props) => {
-    if (props.message === null) {
-      return null
-    }
-    console.log('isError in Notification: ', isError)
-    const messageStyle = {
-      color: isError.error == true ? 'red' : 'green',
-      background: 'lightgrey',
-      fontSize: 20,
-      borderStyle: 'solid',
-      borderRadius: 5,
-      padding: 10,
-      marginBottom: 10,
-    }
-    return (
-      <div style={messageStyle}>
-        {message}
-      </div>
-    )
-  }
-
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
@@ -168,7 +154,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      <Notification message={message} isError={isError.error} /><br />
+      <Notification message={message} isError={isError} /><br />
       <div>
         <button onClick={showAllPersons}>show all</button>
       </div>
