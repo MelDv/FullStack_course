@@ -1,6 +1,9 @@
 # FullStack_course
 Fullstack-kurssin tehtävät, Helsingin yliopisto.  
 
+Kurssin [suoritusohjeet](https://fullstackopen.com/osa0/yleista#osat-ja-suorittaminen)  
+[Palautussovellus](https://studies.cs.helsinki.fi/stats/courses/fullstackopen)
+
 <table>
 <tr><th>Tehtävätilasto </th><th>Arvosana/opintopisterajat</th></tr>
 <tr><td>
